@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>searchTemplates | @verdocs/js-sdk - v3.10.0</title><meta name="description" content="Documentation for @verdocs/js-sdk"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>searchTemplates | @verdocs/js-sdk - v3.10.1</title><meta name="description" content="Documentation for @verdocs/js-sdk"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -6,7 +6,7 @@
 <div id="tsd-toolbar-links"></div></div>
 <ul class="results">
 <li class="state loading">Preparing search index...</li>
-<li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">@verdocs/js-sdk - v3.10.0</a></div>
+<li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">@verdocs/js-sdk - v3.10.1</a></div>
 <div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-menu"></use></svg></a></div></div></header>
 <div class="container container-main">
 <div class="col-content">
@@ -19,7 +19,7 @@
 <h1>Function searchTemplates</h1></div>
 <section class="tsd-panel">
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="searchTemplates"><span class="tsd-kind-call-signature">search<wbr/>Templates</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">endpoint</span>, <span class="tsd-kind-parameter">params</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Templates.Types.ITemplateSummaries.html" class="tsd-signature-type tsd-kind-interface">ITemplateSummaries</a><span class="tsd-signature-symbol">&gt;</span><a href="#searchTemplates" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="searchTemplates"><span class="tsd-kind-call-signature">search<wbr/>Templates</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">endpoint</span>, <span class="tsd-kind-parameter">params</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Templates.Templates.ITemplateSearchResult.html" class="tsd-signature-type tsd-kind-interface">ITemplateSearchResult</a><span class="tsd-signature-symbol">&gt;</span><a href="#searchTemplates" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Search for templates matching various criteria.</p>
 <pre><code class="language-typescript"><span class="hl-2">import</span><span class="hl-1"> {</span><span class="hl-0">Templates</span><span class="hl-1">} </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@verdocs/js-sdk/Templates&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> {</span><span class="hl-5">result</span><span class="hl-1">, </span><span class="hl-5">page</span><span class="hl-1">, </span><span class="hl-5">total</span><span class="hl-1">} = </span><span class="hl-2">await</span><span class="hl-1"> </span><span class="hl-0">Templates</span><span class="hl-1">.</span><span class="hl-6">search</span><span class="hl-1">((</span><span class="hl-0">VerdocsEndpoint</span><span class="hl-1">.</span><span class="hl-6">getDefault</span><span class="hl-1">(), { ... });</span>
@@ -31,11 +31,11 @@
 <li>
 <h5><span class="tsd-kind-parameter">endpoint</span>: <a href="../classes/VerdocsEndpoint.html" class="tsd-signature-type tsd-kind-class">VerdocsEndpoint</a></h5></li>
 <li>
-<h5><span class="tsd-kind-parameter">params</span>: <span class="tsd-signature-type">any</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Templates.Types.ITemplateSummaries.html" class="tsd-signature-type tsd-kind-interface">ITemplateSummaries</a><span class="tsd-signature-symbol">&gt;</span></h4>
+<h5><span class="tsd-kind-parameter">params</span>: <a href="../modules/Templates.html" class="tsd-signature-type tsd-kind-namespace">Templates</a><span class="tsd-signature-symbol">.</span><a href="../modules/Templates.Templates.html" class="tsd-signature-type tsd-kind-namespace">Templates</a><span class="tsd-signature-symbol">.</span><a href="../interfaces/Templates.Templates.ITemplateSearchParams.html" class="tsd-signature-type tsd-kind-interface">ITemplateSearchParams</a></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/Templates.Templates.ITemplateSearchResult.html" class="tsd-signature-type tsd-kind-interface">ITemplateSearchResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Verdocs/js-sdk/blob/main/src/Templates/Templates.ts#L235">Templates/Templates.ts:235</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/Verdocs/js-sdk/blob/main/src/Templates/Templates.ts#L276">Templates/Templates.ts:276</a></li></ul></aside></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -51,7 +51,7 @@
 <div class="tsd-theme-toggle">
 <h4 class="uppercase">Theme</h4><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div></div>
 <div class="site-menu">
-<nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1"></use></svg><span>@verdocs/js-sdk - v3.10.0</span></a>
+<nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1"></use></svg><span>@verdocs/js-sdk - v3.10.1</span></a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="..">
 <li><a href="../modules/Envelopes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>Envelopes</a></li>
 <li><a href="../modules/Organizations.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg>Organizations</a></li>
