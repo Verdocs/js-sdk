@@ -10,7 +10,8 @@
     "noEmit": false,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "**/__tests__/*"]
