@@ -30,6 +30,7 @@ const MockProfile: IProfile = {
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     parent_id: '5678',
+    org_domain: 'test.com',
   },
   permissions: [],
   roles: [],
@@ -53,7 +54,7 @@ describe('Profiles', () => {
     const thenFn = jest.fn();
 
     const mock = new MockAdapter(endpoint.api);
-    const profile = {email: 'EMAIL', password: 'BOGUS', first_name: 'FIRST', last_name: 'LAST', org_name: 'ORG'};
+    const profile = {email: 'EMAIL', password: 'BOGUS', first_name: 'FIRST', last_name: 'LAST', org_name: 'ORG', org_domain: 'test.com'};
     mock.onPost('/v2/profiles').reply(200, profile);
 
     await createProfile(endpoint, profile).then(thenFn).catch(catchFn);
