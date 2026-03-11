@@ -1,5 +1,3 @@
-/* tslint:disable:no-bitwise */
-
 import type {TSession} from '../Sessions';
 
 const b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
