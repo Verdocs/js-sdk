@@ -9,12 +9,14 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - name: Setup Node.js and Yarn
-        uses: actions/setup-node@v3
+      - name: Set Node Version to 20.19.4
+        uses: actions/setup-node@v4
         with:
-          node-version: 24
-          cache: yarn
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+          node-version: '20.19.4'
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - name: Install Dependencies
+        run: pnpm install
       - name: Run Tests
-        run: yarn run test
+        run: pnpm run test
