@@ -9,10 +9,10 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - name: Set Node Version to 20.19.4
+      - name: Set Node Version to 24.11.0
         uses: actions/setup-node@v4
         with:
-          node-version: '20.19.4'
+          node-version: '24.11.0'
       - uses: pnpm/action-setup@v3
         with:
           version: 8
