@@ -5,7 +5,7 @@
     "module": "esnext",
     "lib": ["es2017", "es7", "es6", "dom"],
     "declaration": true,
-    "allowJs": true,
+    "allowJs": false,
     "resolveJsonModule": true,
     "strict": true,
     "noEmit": false,
@@ -18,6 +18,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "include": ["src"],
+  "include": ["src", "**/*.ts"],
   "exclude": ["node_modules/", "dist", "**/*.js"]
 }

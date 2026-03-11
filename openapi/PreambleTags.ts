@@ -23,6 +23,12 @@ const Tag = {
 
 export type Tag = (typeof Tag)[keyof typeof Tag];
 
+export interface OpenAITag {
+  name: Tag;
+  description: string;
+  'x-displayName': Tag;
+}
+
 export const PREABLE_TAGS: OpenAITag[] = [
   {
     name: Tag.ORGANIZATIONS,
@@ -100,9 +106,3 @@ export const PREABLE_TAGS: OpenAITag[] = [
     'x-displayName': Tag.PROFILES,
   },
 ];
-
-interface OpenAITag {
-  name: Tag;
-  description: string;
-  'x-displayName': Tag;
-}

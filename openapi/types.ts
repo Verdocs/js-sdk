@@ -1,5 +1,3 @@
-import {Tag} from './PreambleTags';
-
 export const Kind = {
   PROJECT: 1,
   MODULE: 2,
