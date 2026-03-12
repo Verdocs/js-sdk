@@ -78,6 +78,7 @@ export const isWhitelistedEmail = (email: string) => {
   const isValid = isValidEmail(email);
   if (!isValid) return false;
   const [, domain] = email.split('@');
+  if (!domain) return false;
   return !BANNED_EMAIL_HOST[domain];
 };
 
