@@ -1,7 +1,6 @@
 import {writeFileSync} from 'node:fs';
 import {distributeBlockTags} from './util';
 import {Preamble} from './Preamble';
-// @ts-expect-error - This will not exist until the docs are generated
 import docsJson from '../docs.json';
 import {generateSnippets} from './snippets';
 import {IBlockTagContent, Kind} from './types';
