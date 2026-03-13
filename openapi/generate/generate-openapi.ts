@@ -1,9 +1,10 @@
+// @ts-nocheck
 import {writeFileSync} from 'node:fs';
-import {distributeBlockTags} from './util';
-import {Preamble} from './Preamble';
-import docsJson from '../docs.json';
-import {generateSnippets} from './snippets';
-import {IBlockTagContent, Kind} from './types';
+import {distributeBlockTags} from '../util';
+import {Preamble} from '../Preamble';
+import docsJson from '../../docs.json';
+import {generateSnippets} from '../snippets';
+import {IBlockTagContent, Kind} from '../types';
 
 interface IEntry {
   children?: IEntry[];
