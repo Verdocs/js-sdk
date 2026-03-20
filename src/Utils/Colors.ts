@@ -64,18 +64,16 @@ export function getRGBA(roleIndex: number) {
  * is not specified explicitly, but will be the same for every call with the same input value.
  */
 export function nameToRGBA(str: string) {
-  if (!!str) {
+  if (str) {
     const validNum = parseInt(str.slice(-1), 10);
     if (!isNaN(validNum)) {
       str += (validNum * 99).toString();
     }
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
-      // tslint:disable-next-line:no-bitwise
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
     hash = Math.round(hash / 1.3);
-    // tslint:disable-next-line:no-bitwise
     const c = (hash & 0x00ffff08).toString(16).toUpperCase();
     const hex = '#' + '00000'.substring(0, 6 - c.length) + c;
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex) as any[];
