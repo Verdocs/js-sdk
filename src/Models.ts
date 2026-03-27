@@ -15,6 +15,7 @@ import type {
   TNotificationType,
   TUsageType,
   TWebhookAuthMethod,
+  TWebhookEvent,
 } from './BaseTypes';
 import {TPermission, TRole} from './Sessions';
 
@@ -258,25 +259,7 @@ export interface IUser {
   updated_at: string;
 }
 
-// TODO: Combine this with TWebhookEvent in
-export interface IWebhookEvents {
-  envelope_created: boolean;
-  envelope_completed: boolean;
-  envelope_updated: boolean;
-  envelope_canceled: boolean;
-  envelope_expired: boolean;
-
-  template_created: boolean;
-  template_updated: boolean;
-  template_deleted: boolean;
-  template_used: boolean;
-
-  recipient_submitted: boolean;
-  recipient_updated: boolean;
-  recipient_delegated: boolean;
-  kba_event: boolean;
-  entitlement_used: boolean;
-}
+export type IWebhookEvents = Record<TWebhookEvent, boolean>;
 
 export interface IWebhook {
   id: string;
@@ -389,6 +372,8 @@ export interface IEnvelope {
   initial_reminder: number | null;
   /** Delay (in seconds) before subsequent remidners are sent (min: 12hrs). Set to 0 or null to disable. */
   followup_reminders: number | null;
+  /** Maximum number of days (after envelope creation) for which reminders will be sent. Defaults to 14. */
+  max_reminder_days: number;
   /** When the next reminder is scheduled to be sent. */
   next_reminder: string | null;
   /** Date/time when the envelope was created. */
@@ -759,6 +744,8 @@ export interface ITemplate {
   initial_reminder: number | null;
   /** Delay (in seconds) before subsequent remidners are sent (min: 12hrs). Set to 0 or null to disable. */
   followup_reminders: number | null;
+  /** Maximum number of days (after envelope creation) for which reminders will be sent. Defaults to 14. */
+  max_reminder_days: number;
   /**
    * If true, the template is only visible to the creator. If false, the template will also be visible to the user's
    * organization, if any.
