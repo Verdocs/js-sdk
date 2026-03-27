@@ -142,7 +142,6 @@ export interface IOrganization {
   phone: string | null;
   /** If the organization is a business, its name. Note that a business name can be different from an organization name. */
   contact_email: string | null;
-  org_domain: string | null;
   slug?: string | null;
   /** Web site URL */
   url?: string | null;

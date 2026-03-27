@@ -20,10 +20,6 @@ const NUMBER_REGEX = /^\d+$/;
 
 const DATE_REGEX = /^(\d{4}[-\/]\d{2}[-\/]\d{2})|(\d{2}[-\/]\d{2}[-\/]\d{4})$/;
 
-const DOMAIN_REGEX = /^(?!-)([a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,}$/;
-
-const extractDomainRegex = /^(?:[a-z][a-z0-9+.-]*:\/\/)?([^\/?#]+)/i;
-
 const VALIDATORS = {
   email: {regex: EMAIL_REGEX, label: 'Email Address'},
   phone: {regex: PHONE_REGEX, label: 'Phone Number'},
@@ -31,22 +27,6 @@ const VALIDATORS = {
   postal_code: {regex: POSTAL_CODE_REGEX, label: 'Zip/Postal Code'},
   number: {regex: NUMBER_REGEX, label: 'Number'},
   date: {regex: DATE_REGEX, label: 'Date'},
-};
-
-const BANNED_EMAIL_HOST = {
-  'gmail.com': true,
-  'yahoo.com': true,
-  'outlook.com': true,
-  'hotmail.com': true,
-  'aol.com': true,
-  'icloud.com': true,
-  'protonmail.com': true,
-  'zoho.com': true,
-  'yandex.com': true,
-  'yandex.ru': true,
-  'mail.com': true,
-  'gmx.com': true,
-  'fastmail.com': true,
 };
 
 export const isValidInput = (value: string, validator: string) =>
@@ -66,26 +46,6 @@ export const isValidPhone = (phone: string | undefined) => !!phone && PHONE_REGE
 
 export const isValidRoleName = (value: string, roles: IRole[]) => roles.findIndex((role) => role.name === value) !== -1;
 
-export const isValidDomain = (domain: string) => {
-  return DOMAIN_REGEX.test(domain);
-};
-
 const TagRegEx = /^[a-zA-Z0-9-]{0,32}$/;
 
 export const isValidTag = (value: string, tags: string[]) => TagRegEx.test(value) || tags.findIndex((tag) => tag === value) !== -1;
-
-export const isWhitelistedEmail = (email: string) => {
-  const isValid = isValidEmail(email);
-  if (!isValid) return false;
-  const [, domain] = email.split('@');
-  if (!domain) return false;
-  return !BANNED_EMAIL_HOST[domain];
-};
-
-export const extractDomain = (domain: string): string => {
-  const hostname = domain.match(extractDomainRegex);
-  if (!hostname?.length) return 'Invalid Host';
-  const root = hostname[1].match(/([^.]+\.[^.]+)$/);
-  if (!root?.length) return 'Invalid Root Domain';
-  return root[1];
-};

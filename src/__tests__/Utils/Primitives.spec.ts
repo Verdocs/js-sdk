@@ -1,4 +1,3 @@
-import {expect, it} from '@jest/globals';
 import {formatFullName} from '../../Utils';
 
 it('formatFullName should work as expected', async () => {

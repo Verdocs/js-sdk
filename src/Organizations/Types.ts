@@ -1,5 +1,6 @@
 import {TApiKeyPermission, TEventName, TNotificationType, type TWebhookAuthMethod, TWebhookEvent} from '../BaseTypes';
 import {TRole} from '../Sessions';
+import {IWebhookEvents} from '../Models';
 
 export interface ICreateApiKeyRequest {
   name: string;

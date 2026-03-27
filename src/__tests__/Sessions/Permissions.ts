@@ -1,4 +1,3 @@
-import {expect, it} from '@jest/globals';
 import type {IProfile} from '../../Models';
 import {userHasPermissions} from '../../Sessions';
 

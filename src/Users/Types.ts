@@ -7,7 +7,6 @@ export interface ICreateProfileRequest {
   first_name: string;
   last_name: string;
   org_name: string;
-  org_domain: string;
 }
 
 export interface IUpdateProfileRequest {

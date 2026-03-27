@@ -326,7 +326,7 @@ export class VerdocsEndpoint {
           this.profile = r || null;
           this.notifySessionListeners();
         })
-        .catch(() => {
+        .catch((e) => {
           this.profile = null;
           this.sub = null;
 

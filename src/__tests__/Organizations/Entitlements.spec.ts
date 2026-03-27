@@ -1,6 +1,5 @@
 import {collapseEntitlements} from '../../Utils';
 import {IEntitlement} from '../../Models';
-import {it} from '@jest/globals';
 
 const SAMPLE_ENTITLEMENTS: IEntitlement[] = [
   {
