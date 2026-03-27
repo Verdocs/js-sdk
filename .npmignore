@@ -7,4 +7,5 @@ __mocks__
 /src
 .prettierrc.js
 jestconfig.json
+tslint.json
 tsconfig.json

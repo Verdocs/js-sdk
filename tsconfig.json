@@ -1,23 +1,17 @@
 {
-  "extends": "@tsconfig/node24/tsconfig.json",
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
     "lib": ["es2017", "es7", "es6", "dom"],
     "declaration": true,
-    "allowJs": false,
+    "allowJs": true,
     "resolveJsonModule": true,
     "strict": true,
     "noEmit": false,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "strictNullChecks": true,
-    "skipLibCheck": false,
-    "types": ["node"],
-    "noImplicitAny": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "strictNullChecks": true
   },
-  "include": ["src", "**/*.ts"],
-  "exclude": ["node_modules/", "dist", "**/*.js", "openapi/generate/"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "**/__tests__/*"]
 }
