@@ -22,8 +22,6 @@ const DATE_REGEX = /^(\d{4}[-\/]\d{2}[-\/]\d{2})|(\d{2}[-\/]\d{2}[-\/]\d{4})$/;
 
 const DOMAIN_REGEX = /^(?!-)([a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,}$/;
 
-const EXTRACT_DOMAIN_REGEX = /^(?:[a-z][a-z0-9+.-]*:\/\/)?([^\/?#]+)/i;
-
 const VALIDATORS = {
   email: {regex: EMAIL_REGEX, label: 'Email Address'},
   phone: {regex: PHONE_REGEX, label: 'Phone Number'},
