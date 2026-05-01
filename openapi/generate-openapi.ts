@@ -69,7 +69,7 @@ interface IBlockTag {
   content: IBlockTagContent[];
 }
 
-const joinTagContent = (content: IBlockTagContent[]) => content.map((c) => c.text).join('');
+export const joinTagContent = (content: IBlockTagContent[]) => content.map((c) => c.text).join('');
 
 // See https://regex101.com/r/dJUzdP/1
 // Test strings:
@@ -110,7 +110,7 @@ const parseApiOptionTag = (option: string) => {
 // /v2/envelopes/:envelope_id/
 // /v2/envelopes/:id/
 // /v2/envelopes/:id/path/:otherParam/path2
-const PATH_REGEX = /\/:([a-zA-Z0-9-_]+)/g;
+export const PATH_REGEX = /\/:([a-zA-Z0-9-_]+)/g;
 
 const parseResponseType = (currentResponseSchema: any, param: string) => {
   const parsed = parseApiOptionTag(param);
