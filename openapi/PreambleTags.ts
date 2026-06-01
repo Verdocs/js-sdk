@@ -4,21 +4,25 @@
  * these variables.
  */
 const Tag = {
-  ORGANIZATIONS: 'Organizations',
+  API_KEYS: 'API Keys',
+  AUTHENTICATION: 'Authentication',
+  BRANDS: 'Brands',
   ENVELOPES: 'Envelopes',
   ENVELOPE_DOCUMENTS: 'Envelope Documents',
-  SIGNATURES_AND_INITIALS: 'Signatures and Initials',
-  API_KEYS: 'API Keys',
+  FIELDS: 'Fields',
+  NOTIFICATIONS: 'Notifications',
+  NOTIFICATION_TEMPLATES: 'Notification Templates',
+  ORGANIZATIONS: 'Organizations',
   ORGANIZATION_CONTACTS: 'Organization Contacts',
   ORGANIZATION_INVITATIONS: 'Organization Invitations',
   ORGANIZATION_MEMBERS: 'Organization Members',
-  WEBHOOKS: 'Webhooks',
-  FIELDS: 'Fields',
+  PROFILES: 'Profiles',
+  RECIPIENTS: 'Recipients',
   ROLES: 'Roles',
+  SIGNATURES_AND_INITIALS: 'Signatures and Initials',
   TEMPLATE_DOCUMENTS: 'Template Documents',
   TEMPLATES: 'Templates',
-  AUTHENTICATION: 'Authentication',
-  PROFILES: 'Profiles',
+  WEBHOOKS: 'Webhooks',
 } as const;
 
 export type Tag = (typeof Tag)[keyof typeof Tag];
@@ -32,7 +36,7 @@ export interface OpenAITag {
 /**
  * These are the tags that will be broken up until "sections" in our openapi RestAPI documentation.
  */
-export const PREABLE_TAGS: OpenAITag[] = [
+export const PREAMBLE_TAGS: OpenAITag[] = [
   {
     name: Tag.ORGANIZATIONS,
     description:
@@ -116,5 +120,29 @@ export const PREABLE_TAGS: OpenAITag[] = [
     description:
       'A Profile represents the personal or account information of a user within the platform. Profiles store data such as the user’s name, email, contact information, and preferences. Profiles are used to identify users in signing workflows, manage access, and personalize communications or notifications.',
     'x-displayName': Tag.PROFILES,
+  },
+  {
+    name: Tag.BRANDS,
+    description:
+      'Brands define the visual identity, email settings, and presentation for documents and notifications sent by an organization. Each brand can specify unique logos, color schemes, and email domains to deliver a customized recipient experience. Organizations can manage multiple brands to represent different business units or product lines, ensuring that all outgoing documents and communications align with their branding standards.',
+    'x-displayName': Tag.BRANDS,
+  },
+  {
+    name: Tag.RECIPIENTS,
+    description:
+      'Recipients represent individuals who are designated to complete actions within an envelope, such as signing, initialing, or reviewing documents. Each recipient is assigned a role and may have unique authentication methods, fields to complete, and workflow actions such as agreeing or declining disclosures, submitting signatures, asking questions, or delegating their responsibility. The recipient workflow supports in-person and remote signing, reminder notifications, and advanced verification (e.g., KBA, SMS, passcode). Managing recipients is essential to controlling access and progress through the signing process.',
+    'x-displayName': Tag.RECIPIENTS,
+  },
+  {
+    name: Tag.NOTIFICATIONS,
+    description:
+      'Notifications provide alerts and updates to users regarding activity and important events within the platform. These may include workflow changes, recipient actions, completion statuses, and reminders. Notifications can be delivered via email, SMS, or in-app messages, ensuring that users are informed of required actions or the status of documents and processes.',
+    'x-displayName': Tag.NOTIFICATIONS,
+  },
+  {
+    name: Tag.NOTIFICATION_TEMPLATES,
+    description:
+      'Notification Templates allow organizations to customize the email and SMS notifications sent during signing workflows. Each template is tied to a specific event (e.g. recipient invited, envelope completed) and notification type (email, sms, etc). The caller must have admin access to the organization.',
+    'x-displayName': Tag.NOTIFICATION_TEMPLATES,
   },
 ];
