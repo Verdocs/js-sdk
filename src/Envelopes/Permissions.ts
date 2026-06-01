@@ -5,6 +5,7 @@
  */
 
 import {IEnvelope, IProfile, IRecipient} from '../Models';
+import {TSession} from '../Sessions';
 
 /**
  * Check to see if the profile ID owns the envelope.
@@ -68,6 +69,7 @@ export const userCanFinishEnvelope = (profile: IProfile | null | undefined, enve
   envelope.status !== 'complete' &&
   envelope.status !== 'declined' &&
   envelope.status !== 'canceled';
+
 /**
  * Returns true if the recipient has a pending action. Note that this does not necessarily mean the recipient can act (yet).
  */
@@ -84,6 +86,12 @@ export const getRecipientsWithActions = (envelope: IEnvelope) =>
  */
 export const recipientCanAct = (recipient: IRecipient, recipientsWithActions: IRecipient[]) =>
   recipient.sequence === recipientsWithActions?.[0]?.sequence;
+
+/**
+ * Regardless of if the session is `user` or `signer`, returns the envelope's recipient that matches the user's session.
+ */
+export const getMyRecipient = (session: TSession, envelope: IEnvelope) =>
+  (envelope?.recipients || []).find((r) => r.email === session?.email);
 
 /**
  * Returns true if the user can act.

@@ -16,6 +16,7 @@ import type {
   TUsageType,
   TWebhookAuthMethod,
   TWebhookEvent,
+  TEnvelopeDocumentType,
 } from './BaseTypes';
 import {TPermission, TRole} from './Sessions';
 
@@ -150,18 +151,20 @@ export interface IOrganization {
   primary_color?: string | null;
   secondary_color?: string | null;
   parent_id: string | null;
+  style_overrides?: string | null;
+  hipaa_complaint?: boolean | null;
   disclaimer?: string | null;
   terms_use_url?: string | null;
   privacy_policy_url?: string | null;
   powered_by_label?: string | null;
   powered_by_url?: string | null;
   data?: Record<string, any> | null;
-  /** Creation date/time. */
+  default_brand_id?: string | null;
   created_at: string;
-  /** Last-update date/time. */
   updated_at: string;
 
   api_keys?: IApiKey[];
+  brands?: IBrand[];
   children?: IOrganization[];
   parent?: IOrganization;
   groups?: IGroup[];
@@ -174,6 +177,49 @@ export interface IOrganization {
   templates?: ITemplate[];
   group_profiles?: IGroupProfile[];
   pending_webhooks?: IPendingWebhook[];
+}
+
+export type TDomainStatus = 'pending' | 'active' | 'failed' | 'suspended';
+
+export type TEmailDomainStatus = 'pending' | 'verified' | 'failed' | 'suspended';
+
+export interface IBrand {
+  id: string;
+  organization_id: string;
+  key: string;
+  name: string | null;
+  full_logo_url: string | null;
+  thumbnail_url: string | null;
+  favicon_url: string | null;
+  page_title: string | null;
+  primary_color: string | null;
+  secondary_color: string | null;
+  powered_by_label: string | null;
+  powered_by_url: string | null;
+  style_overrides: string | null;
+  disclaimer: string | null;
+  terms_use_url: string | null;
+  privacy_policy_url: string | null;
+  support_contact: string | null;
+  pdf_signature_reason: string | null;
+  pdf_signature_location: string | null;
+  app_domain: string | null;
+  app_domain_status: TDomainStatus | null;
+  app_domain_cf_id: string | null;
+  app_domain_dcv_token: string | null;
+  email_domain: string | null;
+  email_local_part: string | null;
+  email_display_name: string | null;
+  email_reply_to: string | null;
+  email_reply_to_verified: boolean;
+  email_domain_status: TEmailDomainStatus | null;
+  email_spf_verified: boolean;
+  email_dkim_verified: boolean;
+  email_dmarc_verified: boolean;
+  email_dkim_tokens: string[];
+  created_at: string;
+  updated_at: string;
+  organization?: IOrganization;
 }
 
 export interface IOrganizationInvitation {
@@ -243,19 +289,32 @@ export interface IProfile {
 
 export interface IUser {
   id: string;
+  /** Email address. */
   email: string;
+  /** If true, the email has been verified in some way (e.g. OTP verification or trusted third party. */
   email_verified: boolean;
+  /** Password hash, present only for type consistency. Marked optional, but will never be returned by the backend. */
   pass_hash?: string;
   first_name: string | null;
   last_name: string | null;
   phone: string | null;
   picture: string | null;
+  /** If set, the Azure B2C ID for the user. Generally set only for Teams/PowerAutomate users. */
   b2cId: string | null;
+  /** If set, the Google account ID for the user. Set only for users logging in via Google. */
   googleId: string | null;
+  /** If set, the Apple account ID for the user. Set only for users logging in via Apple. */
   appleId: string | null;
+  /** If set, the Github account ID for the user. Set only for users logging in via Github. */
   githubId?: string | null;
   created_at: string;
   updated_at: string;
+  /** True if the account is locked, typically due to failed sign-in attempts. Only visible to admins or owners. */
+  locked?: boolean;
+  /** Reason the account is locked. Only visible to admins or owners. */
+  lock_reason?: string | null;
+  /** Consecutive failed sign-in attempts. Only visible to admins or owners. */
+  login_failures?: number;
 }
 
 export type IWebhookEvents = Record<TWebhookEvent, boolean>;
@@ -419,7 +478,7 @@ export interface IEnvelopeDocument {
    */
   order: number;
   /** Whether the document is a signer-supplied attachment or a Verdocs-generated certificate */
-  type: 'attachment' | 'certificate';
+  type: TEnvelopeDocumentType;
   /** The name of the document */
   name: string;
   /** Page count */
