@@ -160,6 +160,8 @@ export interface IOrganization {
   powered_by_url?: string | null;
   data?: Record<string, any> | null;
   default_brand_id?: string | null;
+  timezone: string | null;
+  locale: string | null;
   created_at: string;
   updated_at: string;
 
@@ -225,6 +227,8 @@ export interface IBrand {
   email_dkim_verified: boolean;
   email_dmarc_verified: boolean;
   email_dkim_tokens: string[];
+  timezone: string | null;
+  locale: string | null;
   created_at: string;
   updated_at: string;
   organization?: IOrganization;
@@ -279,6 +283,8 @@ export interface IProfile {
   current: boolean;
   permissions: TPermission[];
   roles: TRole[];
+  timezone: string | null;
+  locale: string | null;
   // Creation date/time.
   created_at: string;
   // Last-update date/time.
@@ -315,14 +321,16 @@ export interface IUser {
   appleId: string | null;
   /** If set, the Github account ID for the user. Set only for users logging in via Github. */
   githubId?: string | null;
-  created_at: string;
-  updated_at: string;
   /** True if the account is locked, typically due to failed sign-in attempts. Only visible to admins or owners. */
   locked?: boolean;
   /** Reason the account is locked. Only visible to admins or owners. */
   lock_reason?: string | null;
   /** Consecutive failed sign-in attempts. Only visible to admins or owners. */
   login_failures?: number;
+  timezone: string | null;
+  locale: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export type IWebhookEvents = Record<TWebhookEvent, boolean>;
@@ -694,6 +702,8 @@ export interface IRecipient {
   created_at: string;
   updated_at: string;
   last_attempt_at?: string;
+  timezone: string | null;
+  locale: string | null;
   /**
    * Only returned in creation/getEnvelopeById requests by the creator. May be used for in-person signing. Note that
    * signing sessions started with this key will be marked as "In App" authenticated. For higher authentication levels,

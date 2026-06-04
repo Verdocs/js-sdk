@@ -1,4 +1,4 @@
-import type {TEnvelopeStatus, TFieldType, TRecipientAuthMethod, TRecipientStatus, TRecipientType} from '../BaseTypes';
+import type {ILocaleData, TEnvelopeStatus, TFieldType, TRecipientAuthMethod, TRecipientStatus, TRecipientType} from '../BaseTypes';
 import type {IDropdownOption, IEnvelope, IInitial, IRecipient, ISignature, TAccessKey} from '../Models';
 
 export interface IEnvelopesSearchResult {
@@ -390,6 +390,8 @@ export interface ICreateEnvelopeDirectlyRequest {
   followup_reminders: number;
   /** Maximum number of days (after envelope creation) for which reminders will be sent. Defaults to 14. */
   max_reminder_days?: number;
+  /** The locale and timezone codes, as determined by the client browser. */
+  localeData?: ILocaleData;
   /** Optional metadata to attach to the envelope. This is not used by Verdocs, but may be used for internal tracking purposes by the caller. This is not shown to recipients, but is not private and should not be used to store sensitive data. */
   data?: any;
   /** List of recipients to configure. */

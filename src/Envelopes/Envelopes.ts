@@ -1,6 +1,6 @@
 import axiosRetry from 'axios-retry';
 import {IEnvelope, IEnvelopeDocument, IEnvelopeField, IEnvelopeFieldSettings} from '../Models';
-import {TEnvelopeUpdateResult} from '../BaseTypes';
+import {ILocaleData, TEnvelopeUpdateResult} from '../BaseTypes';
 import {VerdocsEndpoint} from '../VerdocsEndpoint';
 import {TCreateEnvelopeRequest} from './Types';
 
@@ -55,6 +55,7 @@ import {TCreateEnvelopeRequest} from './Types';
  * @apiBody integer(min: 0) followup_reminders? Override the template initial-reminder setting in ms.
  * @apiBody number max_reminder_days? Maximum number of days (after envelope creation) for which reminders will be sent. Defaults to 14.
  * @apiBody string expires_at? If set, the envelope will automatically expire (be canceled) at this date and time. Expirations must be at least 1 day in the future.
+ * @apiBody ILocaleData localeData? The locale and timezone codes, as provided by the client browser.
  * @apiSuccess IEnvelope . The newly-created envelope.
  */
 export const createEnvelope = async (endpoint: VerdocsEndpoint, request: TCreateEnvelopeRequest) =>
@@ -226,6 +227,8 @@ export const updateEnvelope = async (
  * @apiParam string field_name The name of the field to update. Be sure to URL-encode the value.
  * @apiParam string value The value to set. For signature/initial fields, the UUID of the signature/initial block. For attachment fields, a file uploaded in a FORM-POST field named "document". For checkbox/radio buttons, a boolean. For all other fields, a string.
  * @apiBody string value Value to set.
+ * @apiBody boolean prepared
+ * @apiBody ILocaleData localeData? The locale and timezone codes, as provided by the client browser.
  * @apiSuccess IEnvelopeField . A copy of the newly-updated field.
  */
 export const updateEnvelopeField = async (
@@ -235,9 +238,14 @@ export const updateEnvelopeField = async (
   fieldName: string,
   value: string,
   prepared: boolean,
+  data?: {localeData?: ILocaleData},
 ) =>
   endpoint.api //
-    .put<IEnvelopeField>(`/v2/envelopes/${envelopeId}/recipients/${roleName}/fields/${fieldName}`, {value, prepared})
+    .put<IEnvelopeField>(`/v2/envelopes/${envelopeId}/recipients/${roleName}/fields/${fieldName}`, {
+      value,
+      prepared,
+      localeData: data?.localeData,
+    })
     .then((r) => r.data);
 
 /**

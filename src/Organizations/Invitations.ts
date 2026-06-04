@@ -114,6 +114,7 @@ export const getOrganizationInvitation = (endpoint: VerdocsEndpoint, email: stri
  * @apiBody string first_name First name
  * @apiBody string last_name Last name
  * @apiBody string password Password
+ * @apiBody ILocaleData localeData? The locale and timezone codes, as provided by the client browser.
  * @apiSuccess IAuthenticateResponse . Session credentials for the newly-created user's profile. If the user already had a profile for another organization, the new profile will be made "current" automatically.
  */
 export const acceptOrganizationInvitation = (endpoint: VerdocsEndpoint, params: IAcceptOrganizationInvitationRequest) =>
