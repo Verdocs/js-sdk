@@ -162,6 +162,8 @@ export interface IOrganization {
   default_brand_id?: string | null;
   timezone: string | null;
   locale: string | null;
+  /** If set, the organization may not be deleted. Must be set to false before calling DELETE. Defaults to true (protected). */
+  deletion_protected: boolean;
   created_at: string;
   updated_at: string;
 
