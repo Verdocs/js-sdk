@@ -25,7 +25,6 @@ export interface IAcceptOrganizationInvitationRequest {
   first_name: string;
   last_name: string;
   password: string;
-  localeData?: ILocaleData;
 }
 
 export interface ISetWebhookRequest {
