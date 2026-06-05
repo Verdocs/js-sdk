@@ -142,6 +142,13 @@ export interface ICreateEnvelopeRecipientDirectly {
   /** Pre-fill KBA SSN-Last-4 for the recipient, if known. */
   ssn_last_4?: string;
 }
+export interface IRecipientDisclosureAgreeBody {
+  localeData?: ILocaleData;
+}
+
+export interface IRecipientSubmitBody {
+  localeData?: ILocaleData;
+}
 
 export interface ISignerTokenResponse {
   /**
@@ -365,6 +372,8 @@ export interface ICreateEnvelopeFromTemplateRequest {
   data?: any;
   /** Fields to create in the envelope. Note that document_id is a number in this call and should match the index of the document in the documents array. */
   fields?: ICreateEnvelopeFieldFromTemplate;
+  /** The locale and timezone codes, as determined by the client browser. */
+  localeData?: ILocaleData;
 }
 
 export interface ICreateEnvelopeDirectlyRequest {
@@ -390,8 +399,6 @@ export interface ICreateEnvelopeDirectlyRequest {
   followup_reminders: number;
   /** Maximum number of days (after envelope creation) for which reminders will be sent. Defaults to 14. */
   max_reminder_days?: number;
-  /** The locale and timezone codes, as determined by the client browser. */
-  localeData?: ILocaleData;
   /** Optional metadata to attach to the envelope. This is not used by Verdocs, but may be used for internal tracking purposes by the caller. This is not shown to recipients, but is not private and should not be used to store sensitive data. */
   data?: any;
   /** List of recipients to configure. */
@@ -400,6 +407,8 @@ export interface ICreateEnvelopeDirectlyRequest {
   documents: (ICreateEnvelopeDocumentFromData | ICreateEnvelopeDocumentFromUri | ICreateEnvelopeDocumentFromFile)[];
   /** Fields to create in the envelope. Note that document_id is a number in this call and should match the index of the document in the documents array. */
   fields: ICreateEnvelopeFieldDirectly[];
+  /** The locale and timezone codes, as determined by the client browser. */
+  localeData?: ILocaleData;
 }
 
 export type TCreateEnvelopeRequest = ICreateEnvelopeFromTemplateRequest | ICreateEnvelopeDirectlyRequest;

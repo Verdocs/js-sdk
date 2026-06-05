@@ -1,6 +1,6 @@
 import axiosRetry from 'axios-retry';
 import {IEnvelope, IEnvelopeDocument, IEnvelopeField, IEnvelopeFieldSettings} from '../Models';
-import {ILocaleData, TEnvelopeUpdateResult} from '../BaseTypes';
+import {TEnvelopeUpdateResult} from '../BaseTypes';
 import {VerdocsEndpoint} from '../VerdocsEndpoint';
 import {TCreateEnvelopeRequest} from './Types';
 
@@ -228,7 +228,6 @@ export const updateEnvelope = async (
  * @apiParam string value The value to set. For signature/initial fields, the UUID of the signature/initial block. For attachment fields, a file uploaded in a FORM-POST field named "document". For checkbox/radio buttons, a boolean. For all other fields, a string.
  * @apiBody string value Value to set.
  * @apiBody boolean prepared
- * @apiBody ILocaleData localeData? The locale and timezone codes, as provided by the client browser.
  * @apiSuccess IEnvelopeField . A copy of the newly-updated field.
  */
 export const updateEnvelopeField = async (
@@ -238,13 +237,11 @@ export const updateEnvelopeField = async (
   fieldName: string,
   value: string,
   prepared: boolean,
-  data?: {localeData?: ILocaleData},
 ) =>
   endpoint.api //
     .put<IEnvelopeField>(`/v2/envelopes/${envelopeId}/recipients/${roleName}/fields/${fieldName}`, {
       value,
       prepared,
-      localeData: data?.localeData,
     })
     .then((r) => r.data);
 
