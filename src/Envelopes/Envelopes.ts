@@ -227,7 +227,6 @@ export const updateEnvelope = async (
  * @apiParam string field_name The name of the field to update. Be sure to URL-encode the value.
  * @apiParam string value The value to set. For signature/initial fields, the UUID of the signature/initial block. For attachment fields, a file uploaded in a FORM-POST field named "document". For checkbox/radio buttons, a boolean. For all other fields, a string.
  * @apiBody string value Value to set.
- * @apiBody boolean prepared
  * @apiSuccess IEnvelopeField . A copy of the newly-updated field.
  */
 export const updateEnvelopeField = async (
