@@ -142,6 +142,15 @@ export interface ICreateEnvelopeRecipientDirectly {
   /** Pre-fill KBA SSN-Last-4 for the recipient, if known. */
   ssn_last_4?: string;
 }
+export interface IRecipientDisclosureAgreeBody {
+  locale?: string | null;
+  timezone?: string | null;
+}
+
+export interface IRecipientSubmitBody {
+  locale?: string | null;
+  timezone?: string | null;
+}
 
 export interface ISignerTokenResponse {
   /**
@@ -169,6 +178,8 @@ export interface ISignerTokenResponse {
    * which that is required, but for most use-cases, only the first entry should be used.
    */
   initials?: IInitial[];
+  /** The org's default brand, if one is set. Contains style_overrides CSS and other branding fields. */
+  brand?: Record<string, any> | null;
 }
 
 export interface IInPersonLinkResponse {
@@ -363,6 +374,10 @@ export interface ICreateEnvelopeFromTemplateRequest {
   data?: any;
   /** Fields to create in the envelope. Note that document_id is a number in this call and should match the index of the document in the documents array. */
   fields?: ICreateEnvelopeFieldFromTemplate;
+  /** The long-form timezone. */
+  locale?: string | null;
+  /** The locale code */
+  timezone?: string | null;
 }
 
 export interface ICreateEnvelopeDirectlyRequest {
@@ -396,6 +411,10 @@ export interface ICreateEnvelopeDirectlyRequest {
   documents: (ICreateEnvelopeDocumentFromData | ICreateEnvelopeDocumentFromUri | ICreateEnvelopeDocumentFromFile)[];
   /** Fields to create in the envelope. Note that document_id is a number in this call and should match the index of the document in the documents array. */
   fields: ICreateEnvelopeFieldDirectly[];
+  /** The long-form timezone. */
+  locale?: string | null;
+  /** The locale code */
+  timezone?: string | null;
 }
 
 export type TCreateEnvelopeRequest = ICreateEnvelopeFromTemplateRequest | ICreateEnvelopeDirectlyRequest;

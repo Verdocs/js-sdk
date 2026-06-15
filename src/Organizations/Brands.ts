@@ -20,6 +20,8 @@ export const getBrands = (endpoint: VerdocsEndpoint, organizationId: string) =>
  * @group Brands
  * @api POST /v2/organizations/:organizationId/brands Create brand
  * @apiBody string key A unique key for the brand (lowercase alphanumeric + hyphens)
+ * @apiBody string timezone? Define the long-form timezone.
+ * @apiBody string locale? Define the locale code.
  * @apiSuccess IBrand . The newly created brand.
  */
 export const createBrand = (endpoint: VerdocsEndpoint, organizationId: string, params: ICreateBrandRequest) =>
@@ -44,12 +46,72 @@ export const getBrand = (endpoint: VerdocsEndpoint, organizationId: string, bran
  *
  * @group Brands
  * @api PATCH /v2/organizations/:organizationId/brands/:brandId Update brand
+ * @apiBody string timezone? Define the long-form timezone.
+ * @apiBody string locale? Define the locale code.
  * @apiSuccess IBrand . The updated brand.
  */
 export const updateBrand = (endpoint: VerdocsEndpoint, organizationId: string, brandId: string, params: IUpdateBrandRequest) =>
   endpoint.api //
     .patch<IBrand>(`/v2/organizations/${organizationId}/brands/${brandId}`, params)
     .then((r) => r.data);
+
+/**
+ * Update a brand's logo. Uploads the file and sets `full_logo_url`.
+ *
+ * @group Brands
+ * @api PATCH /v2/organizations/:organizationId/brands/:brandId Update brand logo
+ * @apiBody image/png logo Form-encoded file to upload
+ * @apiSuccess IBrand . The updated brand.
+ */
+export const updateBrandLogo = (
+  endpoint: VerdocsEndpoint,
+  organizationId: string,
+  brandId: string,
+  file: File,
+  onUploadProgress?: (percent: number, loadedBytes: number, totalBytes: number) => void,
+) => {
+  const formData = new FormData();
+  formData.append('logo', file, file.name);
+
+  return endpoint.api //
+    .patch<IBrand>(`/v2/organizations/${organizationId}/brands/${brandId}`, formData, {
+      headers: {'Content-Type': 'multipart/form-data'},
+      onUploadProgress: (event) => {
+        const {loaded = 0, total} = event;
+        onUploadProgress?.(Math.floor((loaded * 100) / (total || 1)), loaded, total || 1);
+      },
+    })
+    .then((r) => r.data);
+};
+
+/**
+ * Update a brand's thumbnail. Uploads the file and sets `thumbnail_url`.
+ *
+ * @group Brands
+ * @api PATCH /v2/organizations/:organizationId/brands/:brandId Update brand thumbnail
+ * @apiBody image/png thumbnail Form-encoded file to upload
+ * @apiSuccess IBrand . The updated brand.
+ */
+export const updateBrandThumbnail = (
+  endpoint: VerdocsEndpoint,
+  organizationId: string,
+  brandId: string,
+  file: File,
+  onUploadProgress?: (percent: number, loadedBytes: number, totalBytes: number) => void,
+) => {
+  const formData = new FormData();
+  formData.append('thumbnail', file, file.name);
+
+  return endpoint.api //
+    .patch<IBrand>(`/v2/organizations/${organizationId}/brands/${brandId}`, formData, {
+      headers: {'Content-Type': 'multipart/form-data'},
+      onUploadProgress: (event) => {
+        const {loaded = 0, total} = event;
+        onUploadProgress?.(Math.floor((loaded * 100) / (total || 1)), loaded, total || 1);
+      },
+    })
+    .then((r) => r.data);
+};
 
 /**
  * Delete a brand. Cannot delete the org's default brand.

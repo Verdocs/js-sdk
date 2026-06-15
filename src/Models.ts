@@ -160,8 +160,22 @@ export interface IOrganization {
   powered_by_url?: string | null;
   data?: Record<string, any> | null;
   default_brand_id?: string | null;
+  /** The long-form timezone. */
+  locale?: string | null;
+  /** The locale code */
+  timezone?: string | null;
+  /** If set, the organization may not be deleted. Must be set to false before calling DELETE. Defaults to true (protected). */
+  deletion_protected: boolean;
   created_at: string;
   updated_at: string;
+
+  /**
+   * If creating a child organization, an API key will be automatically created and returned. This saves a few API calls
+   * doing so in subsequent operations. Please note that this is a synthetic field and not part of the formal IOrganization
+   * definition. In API v3, this field will move to the top level, outside the organization response object.
+   * @deprecated
+   */
+  api_key?: {client_id: string; client_secret: string; name: 'Default'};
 
   api_keys?: IApiKey[];
   brands?: IBrand[];
@@ -217,6 +231,10 @@ export interface IBrand {
   email_dkim_verified: boolean;
   email_dmarc_verified: boolean;
   email_dkim_tokens: string[];
+  /** The long-form timezone. */
+  locale?: string | null;
+  /** The locale code */
+  timezone?: string | null;
   created_at: string;
   updated_at: string;
   organization?: IOrganization;
@@ -271,6 +289,10 @@ export interface IProfile {
   current: boolean;
   permissions: TPermission[];
   roles: TRole[];
+  /** The long-form timezone. */
+  locale?: string | null;
+  /** The locale code */
+  timezone?: string | null;
   // Creation date/time.
   created_at: string;
   // Last-update date/time.
@@ -307,14 +329,18 @@ export interface IUser {
   appleId: string | null;
   /** If set, the Github account ID for the user. Set only for users logging in via Github. */
   githubId?: string | null;
-  created_at: string;
-  updated_at: string;
   /** True if the account is locked, typically due to failed sign-in attempts. Only visible to admins or owners. */
   locked?: boolean;
   /** Reason the account is locked. Only visible to admins or owners. */
   lock_reason?: string | null;
   /** Consecutive failed sign-in attempts. Only visible to admins or owners. */
   login_failures?: number;
+  /** The long-form timezone. */
+  locale?: string | null;
+  /** The locale code */
+  timezone?: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export type IWebhookEvents = Record<TWebhookEvent, boolean>;
@@ -686,6 +712,10 @@ export interface IRecipient {
   created_at: string;
   updated_at: string;
   last_attempt_at?: string;
+  /** The long-form timezone. */
+  locale?: string | null;
+  /** The locale code */
+  timezone?: string | null;
   /**
    * Only returned in creation/getEnvelopeById requests by the creator. May be used for in-person signing. Note that
    * signing sessions started with this key will be marked as "In App" authenticated. For higher authentication levels,

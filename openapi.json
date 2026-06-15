@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Verdocs Platform API",
-    "version": "6.9.7",
+    "version": "6.9.13",
     "description": "The Verdocs Platform API provides endpoints for performing all common operations in the Verdocs Platform. API endpoints follow REST conventions and use standard HTTP methods for most operations. All calls are made via a common endpoint [https://api.verdocs.com](https://api.verdocs.com) and use JSON formatting for both request and response bodies.",
     "termsOfService": "https://verdocs.com/en/eula/",
     "license": {
@@ -2377,6 +2377,14 @@
                   "key": {
                     "type": "string",
                     "description": "A unique key for the brand (lowercase alphanumeric + hyphens)"
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "description": "Define the long-form timezone."
+                  },
+                  "locale": {
+                    "type": "string",
+                    "description": "Define the locale code."
                   }
                 }
               }
@@ -2773,6 +2781,14 @@
                   "expires_at": {
                     "type": "string",
                     "description": "If set, the envelope will automatically expire (be canceled) at this date and time. Expirations must be at least 1 day in the future."
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "description": "Define the long-form timezone."
+                  },
+                  "locale": {
+                    "type": "string",
+                    "description": "Define the locale code."
                   }
                 }
               }
@@ -4093,11 +4109,11 @@
                   },
                   "primary_color": {
                     "type": "string",
-                    "description": "URL of a small-format (square is recommended) PNG logo"
+                    "description": "Primary brand color (hex string, e.g. \"#FF0000\")"
                   },
                   "secondary_color": {
                     "type": "string",
-                    "description": "URL of a small-format (square is recommended) PNG logo"
+                    "description": "Secondary brand color (hex string)"
                   },
                   "terms_use_url": {
                     "type": "string",
@@ -4114,6 +4130,26 @@
                   "powered_by_url": {
                     "type": "string",
                     "description": "URL for the Powered By label to show when clicked. Rendered as a static label if not set."
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "description": "Define the long-form timezone."
+                  },
+                  "locale": {
+                    "type": "string",
+                    "description": "Define the locale code."
+                  },
+                  "disclaimer": {
+                    "type": "string",
+                    "description": "Custom disclaimer/disclosure block to present to envelope recipients. May contain basic HTML (e.g. ol/ul/li tags) but complex or dangerous (e.g. script) tags will be rejected."
+                  },
+                  "data": {
+                    "type": "object",
+                    "description": "Developer-supplied metadata attached to the organization."
+                  },
+                  "deletion_protected": {
+                    "type": "boolean",
+                    "description": "Prevents the organization from being deleted until turned off. Defaults to true."
                   }
                 }
               }
@@ -4543,6 +4579,372 @@
             "lang": "Java",
             "label": "Java",
             "source": "HttpResponse<String> response = Unirest.get(\"https://api.verdocs.com/v2/organization-invitations\")\n  .header(\"content-type\", \"application/json\")\n  .header(\"Authorization\", \"Bearer ACCESS_TOKEN\")\n  .asString();"
+          }
+        ]
+      }
+    },
+    "/v2/organization-members": {
+      "post": {
+        "operationId": "createOrganizationMember",
+        "summary": "Create an organization member directly, bypassing the invite process.",
+        "tags": [
+          "Organization Members"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IProfile"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ERROR"
+                      ],
+                      "description": "Always set to \"ERROR\"."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Description of the error that occurred."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access Denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ERROR"
+                      ],
+                      "description": "Always set to \"ERROR\"."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Description of the error that occurred."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ERROR"
+                      ],
+                      "description": "Always set to \"ERROR\"."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Description of the error that occurred."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid Parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ERROR"
+                      ],
+                      "description": "Always set to \"ERROR\"."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Description of the error that occurred."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "description": "Body Parameters",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "first_name",
+                  "last_name"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email address for the member"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "description": "First name for the member"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "description": "Last name for the member"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "If set, will be used as the initial password. If omitted, a password will be generated and returned."
+                  },
+                  "roles": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TRole"
+                    },
+                    "description": "Roles (e.g. \"member\" or \"admin\") to assign to the user."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "label": "CURL",
+            "source": "curl -X POST \"https://api.verdocs.com/v2/organization-members\" \\\n    -H \"Authorization: Bearer ACCESS_TOKEN\" \\\n    -H \"content-type: application/json\" \\\n    -d '{\"param\": \"value\"}'"
+          },
+          {
+            "lang": "TypeScript",
+            "label": "NodeJS",
+            "source": "import fetch from 'node-fetch';\n\nconst response = await fetch('https://api.verdocs.com/v2/organization-members', {\n  method: 'post',\n  body: JSON.stringify(body),\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization: Bearer ACCESS_TOKEN'\n  },\n});\n\nconst data = await response.json();\nconsole.log(data);"
+          },
+          {
+            "lang": "Ruby",
+            "label": "Ruby",
+            "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.verdocs.com/v2/organization-members\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest[\"Authorization\"] = 'Bearer ACCESS_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.verdocs.com\")\nheaders = {\n    'content-type': \"application/json\",\n    'Authorization': \"Bearer ACCESS_TOKEN\"\n}\n\nconn.request(\"POST\", \"/v2/organization-members\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))\n"
+          },
+          {
+            "lang": "C#",
+            "label": "C-Sharp",
+            "source": "var client = new RestClient(\"https://api.verdocs.com/v2/organization-members\");\nvar request = new RestRequest(Method.POST);\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddHeader(\"Authorization\", \"Bearer ACCESS_TOKEN\");\n\nIRestResponse response = client.Execute(request);"
+          },
+          {
+            "lang": "Java",
+            "label": "Java",
+            "source": "HttpResponse<String> response = Unirest.post(\"https://api.verdocs.com/v2/organization-members\")\n  .header(\"content-type\", \"application/json\")\n  .header(\"Authorization\", \"Bearer ACCESS_TOKEN\")\n  .asString();"
+          }
+        ]
+      },
+      "get": {
+        "operationId": "getOrganizationMembers",
+        "summary": "List current organization's members",
+        "tags": [
+          "Organization Members"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IProfile"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ERROR"
+                      ],
+                      "description": "Always set to \"ERROR\"."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Description of the error that occurred."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access Denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ERROR"
+                      ],
+                      "description": "Always set to \"ERROR\"."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Description of the error that occurred."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ERROR"
+                      ],
+                      "description": "Always set to \"ERROR\"."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Description of the error that occurred."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid Parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ERROR"
+                      ],
+                      "description": "Always set to \"ERROR\"."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Description of the error that occurred."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "label": "CURL",
+            "source": "curl -X GET \"https://api.verdocs.com/v2/organization-members\" \\\n    -H \"Authorization: Bearer ACCESS_TOKEN\" \\\n    -H \"content-type: application/json\" \\\n    -d '{\"param\": \"value\"}'"
+          },
+          {
+            "lang": "TypeScript",
+            "label": "NodeJS",
+            "source": "import fetch from 'node-fetch';\n\nconst response = await fetch('https://api.verdocs.com/v2/organization-members', { \n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization: Bearer ACCESS_TOKEN'\n  } \n});\nconst data = await response.json();\nconsole.log(data);"
+          },
+          {
+            "lang": "Ruby",
+            "label": "Ruby",
+            "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.verdocs.com/v2/organization-members\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest[\"Authorization\"] = 'Bearer ACCESS_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.verdocs.com\")\nheaders = {\n    'content-type': \"application/json\",\n    'Authorization': \"Bearer ACCESS_TOKEN\"\n}\n\nconn.request(\"GET\", \"/v2/organization-members\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))\n"
+          },
+          {
+            "lang": "C#",
+            "label": "C-Sharp",
+            "source": "var client = new RestClient(\"https://api.verdocs.com/v2/organization-members\");\nvar request = new RestRequest(Method.GET);\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddHeader(\"Authorization\", \"Bearer ACCESS_TOKEN\");\n\nIRestResponse response = client.Execute(request);"
+          },
+          {
+            "lang": "Java",
+            "label": "Java",
+            "source": "HttpResponse<String> response = Unirest.get(\"https://api.verdocs.com/v2/organization-members\")\n  .header(\"content-type\", \"application/json\")\n  .header(\"Authorization\", \"Bearer ACCESS_TOKEN\")\n  .asString();"
           }
         ]
       }
@@ -6920,8 +7322,8 @@
         ]
       },
       "patch": {
-        "operationId": "updateBrand",
-        "summary": "Update brand",
+        "operationId": "updateBrandThumbnail",
+        "summary": "Update brand thumbnail",
         "tags": [
           "Brands"
         ],
@@ -7040,6 +7442,27 @@
                       "type": "string",
                       "description": "Description of the error that occurred."
                     }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "description": "Body Parameters",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "thumbnail"
+                ],
+                "properties": {
+                  "thumbnail": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Form-encoded file to upload"
                   }
                 }
               }
@@ -9780,6 +10203,14 @@
                       "$ref": "#/components/schemas/TRole"
                     },
                     "description": "New roles to assign to the profile"
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "description": "Define the long-form timezone."
+                  },
+                  "locale": {
+                    "type": "string",
+                    "description": "Define the locale code."
                   }
                 }
               }
@@ -11237,6 +11668,28 @@
             }
           }
         },
+        "requestBody": {
+          "description": "Body Parameters",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [],
+                "properties": {
+                  "timezone": {
+                    "type": "string",
+                    "description": "Define the long-form timezone."
+                  },
+                  "locale": {
+                    "type": "string",
+                    "description": "Define the locale code."
+                  }
+                }
+              }
+            }
+          }
+        },
         "x-codeSamples": [
           {
             "lang": "Shell",
@@ -11595,6 +12048,28 @@
                       "type": "string",
                       "description": "Description of the error that occurred."
                     }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "description": "Body Parameters",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [],
+                "properties": {
+                  "timezone": {
+                    "type": "string",
+                    "description": "Define the long-form timezone."
+                  },
+                  "locale": {
+                    "type": "string",
+                    "description": "Define the locale code."
                   }
                 }
               }
@@ -13252,171 +13727,6 @@
             "lang": "Java",
             "label": "Java",
             "source": "HttpResponse<String> response = Unirest.get(\"https://api.verdocs.com/v2/organization-invitations/EMAIL/TOKEN\")\n  .header(\"content-type\", \"application/json\")\n  .header(\"Authorization\", \"Bearer ACCESS_TOKEN\")\n  .asString();"
-          }
-        ]
-      }
-    },
-    "/v2/organization-members": {
-      "get": {
-        "operationId": "getOrganizationMembers",
-        "summary": "List current organization's members",
-        "tags": [
-          "Organization Members"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/IProfile"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Request Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "error"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "ERROR"
-                      ],
-                      "description": "Always set to \"ERROR\"."
-                    },
-                    "error": {
-                      "type": "string",
-                      "description": "Description of the error that occurred."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Access Denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "error"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "ERROR"
-                      ],
-                      "description": "Always set to \"ERROR\"."
-                    },
-                    "error": {
-                      "type": "string",
-                      "description": "Description of the error that occurred."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "error"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "ERROR"
-                      ],
-                      "description": "Always set to \"ERROR\"."
-                    },
-                    "error": {
-                      "type": "string",
-                      "description": "Description of the error that occurred."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Invalid Parameter",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "error"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "ERROR"
-                      ],
-                      "description": "Always set to \"ERROR\"."
-                    },
-                    "error": {
-                      "type": "string",
-                      "description": "Description of the error that occurred."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-codeSamples": [
-          {
-            "lang": "Shell",
-            "label": "CURL",
-            "source": "curl -X GET \"https://api.verdocs.com/v2/organization-members\" \\\n    -H \"Authorization: Bearer ACCESS_TOKEN\" \\\n    -H \"content-type: application/json\" \\\n    -d '{\"param\": \"value\"}'"
-          },
-          {
-            "lang": "TypeScript",
-            "label": "NodeJS",
-            "source": "import fetch from 'node-fetch';\n\nconst response = await fetch('https://api.verdocs.com/v2/organization-members', { \n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization: Bearer ACCESS_TOKEN'\n  } \n});\nconst data = await response.json();\nconsole.log(data);"
-          },
-          {
-            "lang": "Ruby",
-            "label": "Ruby",
-            "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.verdocs.com/v2/organization-members\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest[\"Authorization\"] = 'Bearer ACCESS_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
-          },
-          {
-            "lang": "Python",
-            "label": "Python",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.verdocs.com\")\nheaders = {\n    'content-type': \"application/json\",\n    'Authorization': \"Bearer ACCESS_TOKEN\"\n}\n\nconn.request(\"GET\", \"/v2/organization-members\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))\n"
-          },
-          {
-            "lang": "C#",
-            "label": "C-Sharp",
-            "source": "var client = new RestClient(\"https://api.verdocs.com/v2/organization-members\");\nvar request = new RestRequest(Method.GET);\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddHeader(\"Authorization\", \"Bearer ACCESS_TOKEN\");\n\nIRestResponse response = client.Execute(request);"
-          },
-          {
-            "lang": "Java",
-            "label": "Java",
-            "source": "HttpResponse<String> response = Unirest.get(\"https://api.verdocs.com/v2/organization-members\")\n  .header(\"content-type\", \"application/json\")\n  .header(\"Authorization\", \"Bearer ACCESS_TOKEN\")\n  .asString();"
           }
         ]
       }
@@ -16540,7 +16850,16 @@
         "type": "object",
         "description": "",
         "required": [],
-        "properties": {}
+        "properties": {
+          "locale": {
+            "type": "string",
+            "description": "The long-form timezone."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The locale code"
+          }
+        }
       },
       "IChangePasswordRequest": {
         "type": "object",
@@ -16628,6 +16947,10 @@
             "type": "integer",
             "description": "Delay (in seconds) before the first reminder is sent (min: 4hrs). Set to 0 or null to disable."
           },
+          "locale": {
+            "type": "string",
+            "description": "The long-form timezone."
+          },
           "max_reminder_days": {
             "type": "integer",
             "description": "Maximum number of days (after envelope creation) for which reminders will be sent. Defaults to 14."
@@ -16651,6 +16974,10 @@
           "sender_name": {
             "type": "string",
             "description": "Override the sender name of the envelope in email and other notifications. NOTE: To prevent spam filters from blocking messages, only the NAME may be overidden. The \"from\" email address will be notifications@verdocs.com and cannot be changed."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The locale code"
           },
           "visibility": {
             "type": "string",
@@ -16899,6 +17226,10 @@
             "type": "integer",
             "description": "Delay (in seconds) before the first reminder is sent (min: 4hrs). Set to 0 or null to disable."
           },
+          "locale": {
+            "type": "string",
+            "description": "The long-form timezone."
+          },
           "max_reminder_days": {
             "type": "integer",
             "description": "Maximum number of days (after envelope creation) for which reminders will be sent. Defaults to 14."
@@ -16922,6 +17253,10 @@
           "sender_name": {
             "type": "string",
             "description": "Override the sender name of the envelope in email and other notifications. NOTE: To prevent spam filters from blocking messages, only the NAME may be overidden. The \"from\" email address will be notifications@verdocs.com and cannot be changed."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The locale code"
           },
           "visibility": {
             "type": "string",
@@ -17718,21 +18053,38 @@
         "description": "",
         "required": [
           "contact_email",
+          "deletion_protected",
           "id",
           "name"
         ],
         "properties": {
+          "api_key": {
+            "type": "string",
+            "description": "If creating a child organization, an API key will be automatically created and returned. This saves a few API calls\ndoing so in subsequent operations. Please note that this is a synthetic field and not part of the formal IOrganization\ndefinition. In API v3, this field will move to the top level, outside the organization response object."
+          },
           "contact_email": {
             "type": "string",
             "description": "If the organization is a business, its name. Note that a business name can be different from an organization name."
+          },
+          "deletion_protected": {
+            "type": "boolean",
+            "description": "If set, the organization may not be deleted. Must be set to false before calling DELETE. Defaults to true (protected)."
           },
           "id": {
             "type": "string",
             "description": "The unique ID of the organization"
           },
+          "locale": {
+            "type": "string",
+            "description": "The long-form timezone."
+          },
           "name": {
             "type": "string",
             "description": "The organization's name."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The locale code"
           },
           "url": {
             "type": "string",
@@ -17770,9 +18122,17 @@
             "type": "string",
             "description": "The unique ID of the profile"
           },
+          "locale": {
+            "type": "string",
+            "description": "The long-form timezone."
+          },
           "organization_id": {
             "type": "string",
             "description": "The profile's organization ID, or a global \"Verdocs\" organization that all personal profiles are members of."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The locale code"
           },
           "user_id": {
             "type": "string",
@@ -17836,6 +18196,10 @@
             "type": "string",
             "description": "If a KBA step requires the user to answer a challenge/differentiator question, the\nquestion(s) to ask."
           },
+          "locale": {
+            "type": "string",
+            "description": "The long-form timezone."
+          },
           "order": {
             "type": "integer",
             "description": "The order indicates the order in which recipients are listed in a single \"level\" of the workflow. Note that\nrecipients at the same level may act in parallel despite this value. However, it can often be useful to visually\narrange recipients to match related business processes so this field allows for that."
@@ -17860,11 +18224,21 @@
             "type": "string",
             "description": "Zip code. Only used in KBA workflows."
           },
+          "timezone": {
+            "type": "string",
+            "description": "The locale code"
+          },
           "zip": {
             "type": "string",
             "description": "Zip code. Only used in KBA workflows."
           }
         }
+      },
+      "IRecipientDisclosureAgreeBody": {
+        "type": "object",
+        "description": "",
+        "required": [],
+        "properties": {}
       },
       "IRecipientKbaStepChallenge": {
         "type": "object",
@@ -17899,6 +18273,12 @@
       "IRecipientKbaStepPin": {
         "type": "object",
         "description": "A PIN code is required. Prompt the user to enter this PIN, and submit it via",
+        "required": [],
+        "properties": {}
+      },
+      "IRecipientSubmitBody": {
+        "type": "object",
+        "description": "",
         "required": [],
         "properties": {}
       },
@@ -17977,6 +18357,10 @@
           "access_token": {
             "type": "string",
             "description": "An access token that may be used with a VerdocsEndpoint to perform signing operations.\nWhen signing, the caller's \"authentication\" status will be recorded as \"in-person\"."
+          },
+          "brand": {
+            "type": "string",
+            "description": "The org's default brand, if one is set. Contains style_overrides CSS and other branding fields."
           },
           "envelope": {
             "type": "string",
@@ -18444,6 +18828,10 @@
             "type": "string",
             "description": "If set, the Google account ID for the user. Set only for users logging in via Google."
           },
+          "locale": {
+            "type": "string",
+            "description": "The long-form timezone."
+          },
           "lock_reason": {
             "type": "string",
             "description": "Reason the account is locked. Only visible to admins or owners."
@@ -18459,6 +18847,10 @@
           "pass_hash": {
             "type": "string",
             "description": "Password hash, present only for type consistency. Marked optional, but will never be returned by the backend."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The locale code"
           }
         }
       },
@@ -19158,7 +19550,8 @@
           "recipient_disclosure_accepted",
           "recipient_docs_downloaded",
           "recipient_invite_failed",
-          "recipient_declined"
+          "recipient_declined",
+          "organization_deleted"
         ]
       }
     },

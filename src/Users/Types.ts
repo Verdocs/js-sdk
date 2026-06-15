@@ -8,6 +8,8 @@ export interface ICreateProfileRequest {
   last_name: string;
   org_name: string;
   phone: string;
+  timezone?: string | null;
+  locale?: string | null;
 }
 
 export interface IUpdateProfileRequest {
@@ -15,6 +17,8 @@ export interface IUpdateProfileRequest {
   last_name?: string;
   // email?: string;
   phone?: string;
+  timezone?: string | null;
+  locale?: string | null;
   permissions?: TPermission[];
   roles?: TRole[];
 }

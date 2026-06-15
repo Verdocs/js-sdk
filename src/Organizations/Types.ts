@@ -56,6 +56,8 @@ export interface ICreateBrandRequest {
   support_contact?: string;
   pdf_signature_reason?: string;
   pdf_signature_location?: string;
+  timezone?: string | null;
+  locale?: string | null;
 }
 
 export interface IUpdateBrandRequest {
@@ -75,6 +77,8 @@ export interface IUpdateBrandRequest {
   support_contact?: string | null;
   pdf_signature_reason?: string | null;
   pdf_signature_location?: string | null;
+  timezone?: string | null;
+  locale?: string | null;
 }
 
 export interface IAddBrandEmailDomainRequest {
