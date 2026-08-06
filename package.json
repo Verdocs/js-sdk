@@ -1,6 +1,6 @@
 {
   "name": "@verdocs/js-sdk",
-  "version": "6.10.4",
+  "version": "6.10.6",
   "private": false,
   "homepage": "https://github.com/Verdocs/js-sdk",
   "description": "Isomorphic JS/TS SDK providing types and API wrappers for the Verdocs platform for Node and browser clients",
@@ -50,7 +50,7 @@
     "access": "public"
   },
   "dependencies": {
-    "axios": "^1.18.1",
+    "axios": "^1.19.0",
     "axios-retry": "^4.5.0"
   },
   "peerDependencies": {
@@ -64,7 +64,7 @@
     "esbuild": "^0.25.10",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.2.0",
-    "prettier": "^3.8.2",
+    "prettier": "^3.9.6",
     "rollup": "^4.60.3",
     "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-copy": "^3.5.0",
