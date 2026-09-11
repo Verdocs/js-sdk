@@ -1,5 +1,4 @@
 import type {
-  TApiKeyPermission,
   TEntitlement,
   TEnvelopeStatus,
   TEventDetail,
@@ -67,13 +66,22 @@ export interface INotificationTemplate {
 //////////////////////////////////////// IAM //////////////////////////////
 
 export interface IApiKey {
-  client_id: string;
+  /** User-provided name for the key. Only used for identification. */
   name: string;
+  /** Organization the key is connected to. */
   organization_id: string;
+  /** The profile calls made with this key will act as. Ignored if global_admin is set. */
   profile_id: string;
+  /** If set, the key has full access to the organization, overriding the permissions of its assigned profile. */
   global_admin: boolean;
-  client_secret?: string | null;
-  permission: TApiKeyPermission;
+  /** Only returned when a key is created or rotated. */
+  client_id: string;
+  /** Only returned when a key is created or rotated. */
+  client_secret?: string;
+  /** Creation date/time. */
+  created_at: string;
+  /** Last date/time the key was used. */
+  last_used_at: string | null;
 
   profile?: IProfile;
   organization?: IOrganization;

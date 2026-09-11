@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Verdocs Platform API",
-    "version": "6.10.4",
+    "version": "6.10.7",
     "description": "The Verdocs Platform API provides endpoints for performing all common operations in the Verdocs Platform. API endpoints follow REST conventions and use standard HTTP methods for most operations. All calls are made via a common endpoint [https://api.verdocs.com](https://api.verdocs.com) and use JSON formatting for both request and response bodies.",
     "termsOfService": "https://verdocs.com/en/eula/",
     "license": {
@@ -1917,8 +1917,7 @@
                 "type": "object",
                 "required": [
                   "name",
-                  "profile_id",
-                  "permission"
+                  "profile_id"
                 ],
                 "properties": {
                   "name": {
@@ -1930,12 +1929,9 @@
                     "format": "uuid",
                     "description": "The profile ID that calls made using the key will act as"
                   },
-                  "permission": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "An array of permissions to assign to the new key. Extends (but does not override) the API key's profile permissions."
+                  "global_admin": {
+                    "type": "boolean",
+                    "description": "If true, the key has full access to the organization, overriding the permissions of its assigned profile. Defaults to false."
                   }
                 }
               }
@@ -6569,7 +6565,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/TBasicResponse"
                 }
               }
             }
@@ -6850,20 +6846,20 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "permission"
-                ],
+                "required": [],
                 "properties": {
                   "name": {
                     "type": "string",
                     "description": "New name for the API key"
                   },
-                  "permission": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "New array of permissions to assign to the new key. Extends (but does not override) the API key's profile permissions."
+                  "profile_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "New profile ID that calls made using the key will act as"
+                  },
+                  "global_admin": {
+                    "type": "boolean",
+                    "description": "If true, the key has full access to the organization, overriding the permissions of its assigned profile."
                   }
                 }
               }
@@ -17063,8 +17059,49 @@
       "IApiKey": {
         "type": "object",
         "description": "",
-        "required": [],
-        "properties": {}
+        "required": [
+          "client_id",
+          "created_at",
+          "global_admin",
+          "last_used_at",
+          "name",
+          "organization_id",
+          "profile_id"
+        ],
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "Only returned when a key is created or rotated."
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "Only returned when a key is created or rotated."
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Creation date/time."
+          },
+          "global_admin": {
+            "type": "boolean",
+            "description": "If set, the key has full access to the organization, overriding the permissions of its assigned profile."
+          },
+          "last_used_at": {
+            "type": "string",
+            "description": "Last date/time the key was used."
+          },
+          "name": {
+            "type": "string",
+            "description": "User-provided name for the key. Only used for identification."
+          },
+          "organization_id": {
+            "type": "string",
+            "description": "Organization the key is connected to."
+          },
+          "profile_id": {
+            "type": "string",
+            "description": "The profile calls made with this key will act as. Ignored if global_admin is set."
+          }
+        }
       },
       "IAuthenticateRecipientViaEmailRequest": {
         "type": "object",
@@ -19248,15 +19285,6 @@
           null
         ]
       },
-      "TApiKeyPermission": {
-        "type": "string",
-        "description": "",
-        "enum": [
-          "personal",
-          "global_read",
-          "global_write"
-        ]
-      },
       "TAuthenticateRecipientRequest": {
         "type": "string",
         "description": "",
@@ -19276,6 +19304,11 @@
           null,
           null
         ]
+      },
+      "TBasicResponse": {
+        "type": "string",
+        "description": "",
+        "enum": []
       },
       "TCreateEnvelopeRequest": {
         "type": "string",
