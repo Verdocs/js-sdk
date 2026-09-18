@@ -1,22 +1,6 @@
-import type {
-  TEntitlement,
-  TEnvelopeStatus,
-  TEventDetail,
-  TFieldType,
-  THistoryEvent,
-  TRecipientAuthMethod,
-  TRecipientAuthStep,
-  TRecipientStatus,
-  TRecipientType,
-  TTemplateSender,
-  TTemplateVisibility,
-  TEventName,
-  TNotificationType,
-  TUsageType,
-  TWebhookAuthMethod,
-  TWebhookEvent,
-  TEnvelopeDocumentType,
-} from './BaseTypes';
+import type {TTemplateSender, TTemplateVisibility, TEventName, TNotificationType, TUsageType, TWebhookAuthMethod} from './BaseTypes';
+import type {TEntitlement, TEnvelopeStatus, TEventDetail, TFieldType, THistoryEvent, TRecipientAuthMethod} from './BaseTypes';
+import type {TRecipientAuthStep, TRecipientStatus, TRecipientType, TWebhookEvent, TEnvelopeDocumentType} from './BaseTypes';
 import {TPermission, TRole} from './Sessions';
 
 /////////////////////////////// NOTIFICATIONS /////////////////////////////
@@ -334,6 +318,9 @@ export interface IProfile {
   initials?: IInitial[];
 }
 
+/** IdP used for sign-in. Note that "microsoft" covers both Entra ID (work and school) and personal accounts. */
+export type TSignInProvider = 'google' | 'apple' | 'github' | 'microsoft';
+
 export interface IUser {
   id: string;
   /** Email address. */
@@ -364,6 +351,17 @@ export interface IUser {
   locale?: string | null;
   /** The locale code */
   timezone?: string | null;
+  /** Social-IdP accounts have no password set. Used to gate some front-end features like password-reset UI controls. */
+  has_password: boolean;
+  /** Last password-change datetime. */
+  password_changed_at: string | null;
+  /** Linked social IdP's if any. */
+  sign_in_providers: TSignInProvider[];
+  mfa: {
+    enabled: boolean;
+    enrolled_at: string | null;
+    backup_codes_remaining: number;
+  };
   created_at: string;
   updated_at: string;
 }
