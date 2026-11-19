@@ -1,6 +1,8 @@
 # Verdocs JS SDK
 
-> Verdocs SDK for Javascript / Typescript
+> **Deprecated:** This repository is no receiving updates.
+> The current code for the Verdocs JS-SDK now lives at [Verdocs/hub — packages/js-sdk](https://github.com/Verdocs/hub/tree/main/packages/js-sdk).
+
 
 This SDK provides convenience wrappers for both Browser-based and NodeJS applications to call the Verdocs API, with strong typing and
 documentation to help you get started quickly developing for the Verdocs platform.
